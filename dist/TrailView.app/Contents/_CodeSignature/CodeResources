@@ -4,13 +4,17 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/California_Coastal_Trail_(CCT)_.csv</key>
+		<data>
+		WlpEO5h+v6a1HQY7WbCv3T8FhKw=
+		</data>
 		<key>Resources/PythonApplet.icns</key>
 		<data>
 		9zRqvdRORUNhZjC9sNbLi26ck94=
 		</data>
 		<key>Resources/TrailView.py</key>
 		<data>
-		8CF5KcdFTrx9h/98V8qIQ9RRZnM=
+		xpXHj9OC+cSmoLGppp1DGYjtayc=
 		</data>
 		<key>Resources/__boot__.py</key>
 		<data>
@@ -242,11 +246,15 @@
 		</data>
 		<key>Resources/lib/python311.zip</key>
 		<data>
-		8CvKtghLgHvq2u5nNr5J939OS3U=
+		400ungpeuAbp6PXQpK9kWxn/7pw=
 		</data>
 		<key>Resources/site.pyc</key>
 		<data>
-		CtQbo0z6G44YKRuys/Xa71f+/sQ=
+		aiiEZmj/VZMmfDxLgcnb6kawhNU=
+		</data>
+		<key>Resources/trail_data_reader.py</key>
+		<data>
+		2ncNU/KVtTRnLgEKfyKUs21NspI=
 		</data>
 		<key>Resources/zlib.cpython-311-darwin.so</key>
 		<data>
@@ -309,6 +317,17 @@
 			<key>requirement</key>
 			<string>cdhash H"7f509828ff6857f1eefc202792b87070a617236a" or cdhash H"d9658b49be431d1abc9bb0a5b8a92bd920246e93" or cdhash H"ba413f1ec54e11077c1106f5063903f8dc61e27c" or cdhash H"ce575ebf3d4966b5e9aacfb24ffe9a9537dc29b3"</string>
 		</dict>
+		<key>Resources/California_Coastal_Trail_(CCT)_.csv</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			WlpEO5h+v6a1HQY7WbCv3T8FhKw=
+			</data>
+			<key>hash2</key>
+			<data>
+			KMU2trh9z23ka4zkR6Rr2RLyR3lXzliYP5G3/HugLcU=
+			</data>
+		</dict>
 		<key>Resources/PythonApplet.icns</key>
 		<dict>
 			<key>hash</key>
@@ -324,11 +343,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			8CF5KcdFTrx9h/98V8qIQ9RRZnM=
+			xpXHj9OC+cSmoLGppp1DGYjtayc=
 			</data>
 			<key>hash2</key>
 			<data>
-			iYKa6mIhYSfwltDSaaWOBFzWqnCkxHtsJ3Jck5KqXiE=
+			vIFm51agHpPIPIOQG1NonQ+isU7/pZ63CLudbN005zQ=
 			</data>
 		</dict>
 		<key>Resources/__boot__.py</key>
@@ -967,22 +986,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			8CvKtghLgHvq2u5nNr5J939OS3U=
+			400ungpeuAbp6PXQpK9kWxn/7pw=
 			</data>
 			<key>hash2</key>
 			<data>
-			U0sMtOqU8+RaUF+y4KzqtnROKbqvOLC6lEGqDhaGsMo=
+			OdD3TM0X3DNMsZae0hRfv2zdHO+mMoAPd8nm/5XKwT4=
 			</data>
 		</dict>
 		<key>Resources/site.pyc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CtQbo0z6G44YKRuys/Xa71f+/sQ=
+			aiiEZmj/VZMmfDxLgcnb6kawhNU=
 			</data>
 			<key>hash2</key>
 			<data>
-			ePEiUjOUZYvj9xfSqZZAFradu+hx011OmMs5hZr2V+U=
+			0+Jf81smEuiDo7zeWFzxBqSnbX0L6GG+0tVT8qmPW+8=
+			</data>
+		</dict>
+		<key>Resources/trail_data_reader.py</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2ncNU/KVtTRnLgEKfyKUs21NspI=
+			</data>
+			<key>hash2</key>
+			<data>
+			2M1lwSKH8XZnTU+xdR3cOGewvadqz4HXhYMAJD+sRlg=
 			</data>
 		</dict>
 		<key>Resources/zlib.cpython-311-darwin.so</key>
