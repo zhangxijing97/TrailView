@@ -1,9 +1,9 @@
 MDFloatLayout:
     MDLabel:
-        id: main_label
+        id: task_label
         halign: 'center'
         markup: True
-        text: "[size=48][b]TrailView[/b][/size]"
+        text: "[u][size=48][b]TrailView[/b][/size][/u]"
         pos_hint: {'y': .45}
 
     ScrollView:
@@ -17,7 +17,7 @@ MDFloatLayout:
         icon: 'plus-thick'
         on_release: app.show_trail_dialog()
         elevation_normal: 12
-        pos_hint: {'x': .45, 'y': .04}
+        pos_hint: {'x': .45 , 'y': .04}
 
 <DialogContent>:
     orientation: "vertical"
@@ -29,11 +29,16 @@ MDFloatLayout:
         rows: 1
 
         MDTextField:
-            id: trail
-            hint_text: "Add Trail..."
+            id: trail_text
+            hint_text: "Add Task..."
             pos_hint: {"center_y": .4}
             max_text_length: 50
-            on_text_validate: app.add_trail(trail)
+            on_text_validate: (app.add_trail(trail_text, date_text.text), app.close_dialog())
+
+        MDIconButton:
+            icon: 'calendar'
+            on_release: root.show_date_picker()
+            padding: '10dp'
 
     MDLabel:
         spacing: '10dp'
@@ -44,7 +49,7 @@ MDFloatLayout:
 
         MDRaisedButton:
             text: "SAVE"
-            on_release: app.add_trail(trail)
+            on_release: (app.add_trail(trail_text, date_text.text), app.close_dialog())
         MDFlatButton:
             text: 'CANCEL'
             on_release: app.close_dialog()
@@ -55,10 +60,12 @@ MDFloatLayout:
 
     LeftCheckbox:
         id: check
-        on_release: root.mark(check, the_list_item)
+        on_release: 
+            root.mark(check, the_list_item)
 
     IconRightWidget:
         icon: 'trash-can-outline'
         theme_text_color: "Custom"
         text_color: 1, 0, 0, 1
-        on_release: root.delete_item(the_list_item)
+        on_release:
+            root.delete_item(the_list_item)
