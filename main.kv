@@ -23,33 +23,88 @@ MDFloatLayout:
     orientation: "vertical"
     spacing: "10dp"
     size_hint: 1, None
-    height: "130dp"
+    height: "500dp"
 
+    # name
     GridLayout:
         rows: 1
-
         MDTextField:
             id: trail_text
-            hint_text: "Add Task..."
+            hint_text: "Name"
             pos_hint: {"center_y": .4}
             max_text_length: 50
-            on_text_validate: (app.add_trail(trail_text), app.close_dialog())
+            on_text_validate: (app.add_trail(trail_text, trail_location), app.close_dialog())
 
-        MDIconButton:
-            icon: 'calendar'
-            on_release: root.show_date_picker()
-            padding: '10dp'
+    # location
+    GridLayout:
+        rows: 1
+        MDTextField:
+            id: trail_location
+            hint_text: "Location"
+            pos_hint: {"center_y": .4}
+            max_text_length: 50
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
+    # latitude
+    GridLayout:
+        rows: 1
+        MDTextField:
+            id: trail_latitude
+            hint_text: "latitude"
+            pos_hint: {"center_y": .4}
+            max_text_length: 50
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
 
-    MDLabel:
-        spacing: '10dp'
-        id: date_text
+    # longitude
+    GridLayout:
+        rows: 1
+        MDTextField:
+            id: trail_longitude
+            hint_text: "longitude"
+            pos_hint: {"center_y": .4}
+            max_text_length: 50
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
+
+    # length
+    GridLayout:
+        rows: 1
+        MDTextField:
+            id: trail_length
+            hint_text: "length"
+            pos_hint: {"center_y": .4}
+            max_text_length: 50
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
+
+    # difficulty
+    GridLayout:
+        rows: 1
+        MDTextField:
+            id: trail_difficulty
+            hint_text: "difficulty"
+            pos_hint: {"center_y": .4}
+            max_text_length: 50
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
+
+    # isKidFriendly
+    FloatLayout:
+        MDSwitch:
+            id: isKidFriendly
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
+
+    # isPetFriendly
+    FloatLayout:
+        MDSwitch:
+            id: isPetFriendly
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            # on_text_validate: (app.add_trail(trail_text, trail_location, trail_latitude, trail_longitude, trail_length, trail_difficulty, isKidFriendly, isPetFriendly), app.close_dialog())
 
     BoxLayout:
         orientation: 'horizontal'
 
         MDRaisedButton:
             text: "SAVE"
-            on_release: (app.add_trail(trail_text), app.close_dialog())
+            # on_release: (app.add_trail(trail_text, trail_location), app.close_dialog())
+            on_release: (app.add_trail(trail_text, trail_location), app.close_dialog())
             
         MDFlatButton:
             text: 'CANCEL'
@@ -59,14 +114,14 @@ MDFloatLayout:
     id: the_list_item
     markup: True
 
-    LeftCheckbox:
-        id: check
-        on_release: 
-            root.mark(check, the_list_item)
+    # LeftCheckbox:
+    #     id: check
+    #     on_release: 
+    #         root.mark(check, the_list_item)
 
-    IconRightWidget:
-        icon: 'trash-can-outline'
-        theme_text_color: "Custom"
-        text_color: 1, 0, 0, 1
-        on_release:
-            root.delete_item(the_list_item)
+    # IconRightWidget:
+    #     icon: 'trash-can-outline'
+    #     theme_text_color: "Custom"
+    #     text_color: 1, 0, 0, 1
+    #     on_release:
+    #         root.delete_item(the_list_item)

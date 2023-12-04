@@ -18,17 +18,18 @@ class DialogContent(MDBoxLayout):
     """OPENS A DIALOG BOX THAT GETS THE TASK FROM THE USER"""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.ids.date_text.text = str(datetime.now().strftime('%A %d %B %Y'))
-    
-    def show_date_picker(self):
-        """Opens the date picker"""
-        date_dialog = MDDatePicker()
-        date_dialog.bind(on_save=self.on_save)
-        date_dialog.open()
 
-    def on_save(self, instance, value, date_range):
-        date = value.strftime('%A %d %B %Y')
-        self.ids.date_text.text = str(date)
+    # self.ids.date_text.text = str(datetime.now().strftime('%A %d %B %Y'))
+    
+    # def show_date_picker(self):
+    #     """Opens the date picker"""
+    #     date_dialog = MDDatePicker()
+    #     date_dialog.bind(on_save=self.on_save)
+    #     date_dialog.open()
+
+    # def on_save(self, instance, value, date_range):
+    #     date = value.strftime('%A %d %B %Y')
+    #     self.ids.date_text.text = str(date)
 
 # After creating the database.py
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
@@ -40,9 +41,9 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
         self.pk = pk
 
     def mark(self, check, the_list_item):
-        '''mark the task as complete or incomplete'''
+        '''mark the trail as saved or unsaved'''
         if check.active == True:
-            the_list_item.text = '[s]'+the_list_item.text+'[/s]'
+            the_list_item.text = the_list_item.text
             db.mark_trail_as_saved(the_list_item.pk)# here
         else:
             the_list_item.text = str(db.mark_trail_as_unsaved(the_list_item.pk))# Here
@@ -80,12 +81,12 @@ class MainApp(MDApp):
 
             if saved_trails != []:
                 for trail in saved_trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0],text=trail[1])
+                    add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
                     self.root.ids.container.add_widget(add_trail)
 
             if unsaved_trails != []:
                 for trail in unsaved_trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0],text='[s]'+trail[1]+'[/s]')
+                    add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
                     add_trail.ids.check.active = True
                     self.root.ids.container.add_widget(add_trail)
 
@@ -96,9 +97,10 @@ class MainApp(MDApp):
     def close_dialog(self, *args):
         self.trail_list_dialog.dismiss()
 
-    def add_trail(self, trail):
+    def add_trail(self, trail, location):
         '''Add task to the list of tasks'''
-        created_trail = db.create_trail(trail.text)
+        # created_trail = db.create_trail(trail.text, location.text, latitude, longitude, length, difficulty, duration, isKidFriendly)
+        created_trail = db.create_trail(trail.text, location.text)
 
         # return the created task details and create a list item
         self.root.ids['container'].add_widget(ListItemWithCheckbox(pk=created_trail[0], text='[b]'+created_trail[1]+'[/b]'))
