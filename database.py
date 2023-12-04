@@ -2,52 +2,37 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.con = sqlite3.connect('todo.db')
+        self.con = sqlite3.connect('trails.db')
         self.cursor = self.con.cursor()
-        self.create_task_table()
+        self.create_trail_table()
 
-    '''CREATE the Tasks TABLE'''
-    def create_task_table(self):
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS tasks(id integer PRIMARY KEY AUTOINCREMENT, task varcahr(50) NOT NULL, due_date varchar(50), completed BOOLEAN NOT NULL CHECK (completed IN (0, 1)))")
-    
-    '''CREATE A Task'''
-    def create_task(self, task, due_date=None):
-        self.cursor.execute("INSERT INTO tasks(task, due_date, completed) VALUES(?, ?, ?)", (task, due_date, 0))
+    def create_trail_table(self):
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS trails(id integer PRIMARY KEY AUTOINCREMENT, trail varchar(50) NOT NULL, saved BOOLEAN NOT NULL CHECK (saved IN (0, 1)))")
+
+    def create_trail(self, trail):
+        self.cursor.execute("INSERT INTO trails(trail, saved) VALUES(?, ?)", (trail, 0))
+        self.con.commit()
+        created_trail = self.cursor.execute("SELECT id, trail FROM trails WHERE trail = ? and saved = 0", (trail,)).fetchall()
+        return created_trail[-1]
+
+    def get_trails(self):
+        saved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 1").fetchall()
+        unsaved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 0").fetchall()
+        return saved_trails, unsaved_trails
+
+    def mark_trail_as_saved(self, trailid):
+        self.cursor.execute("UPDATE trails SET saved=1 WHERE id=?", (trailid,))
         self.con.commit()
 
-        # Getting the last entered item to add in the list
-        created_task = self.cursor.execute("SELECT id, task, due_date FROM tasks WHERE task = ? and completed = 0", (task,)).fetchall()
-        return created_task[-1]
-    
-    '''READ / GET the tasks'''
-    def get_tasks(self):
-        
-        # Getting all complete and incomplete tasks
-        
-        complete_tasks = self.cursor.execute("SELECT id, task, due_date FROM tasks WHERE completed = 1").fetchall()
+    def mark_trail_as_unsaved(self, trailid):
+        self.cursor.execute("UPDATE trails SET saved=0 WHERE id=?", (trailid,))
+        self.con.commit()
+        trail_name = self.cursor.execute("SELECT trail FROM trails WHERE id=?", (trailid,)).fetchall()
+        return trail_name[0][0]
 
-        incomplete_tasks = self.cursor.execute("SELECT id, task, due_date FROM tasks WHERE completed = 0").fetchall()
-
-        return incomplete_tasks , complete_tasks
-
-
-    '''UPDATING the tasks status'''
-    def mark_task_as_complete(self, taskid):
-        self.cursor.execute("UPDATE tasks SET completed=1 WHERE id=?",(taskid,))
+    def delete_trail(self, trailid):
+        self.cursor.execute("DELETE FROM trails WHERE id=?", (trailid,))
         self.con.commit()
 
-    def mark_task_as_incomplete(self, taskid):
-        self.cursor.execute("UPDATE tasks SET completed=0 WHERE id=?",(taskid,))
-        self.con.commit()
-        
-        # returning the task text
-        task_text = self.cursor.execute("SELECT task FROM tasks WHERE id=?", (taskid,)).fetchall()
-        return task_text[0][0]
-
-    '''Deleting the task'''
-    def delete_task(self, taskid):
-        self.cursor.execute("DELETE FROM tasks WHERE id=?", (taskid,))
-        self.con.commit()
-    '''Closing the connection '''
     def close_db_connection(self):
         self.con.close()

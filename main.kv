@@ -1,9 +1,9 @@
 MDFloatLayout:
     MDLabel:
-        id: task_label
+        id: main_label
         halign: 'center'
         markup: True
-        text: "[u][size=48][b]Task Manager[/b][/size][/u]"
+        text: "[size=48][b]TrailView[/b][/size]"
         pos_hint: {'y': .45}
 
     ScrollView:
@@ -13,12 +13,11 @@ MDFloatLayout:
         MDList:
             id: container
 
-
     MDFloatingActionButton:
         icon: 'plus-thick'
-        on_release: app.show_task_dialog()
+        on_release: app.show_trail_dialog()
         elevation_normal: 12
-        pos_hint: {'x': .45 , 'y': .04}
+        pos_hint: {'x': .45, 'y': .04}
 
 <DialogContent>:
     orientation: "vertical"
@@ -30,16 +29,11 @@ MDFloatLayout:
         rows: 1
 
         MDTextField:
-            id: task_text
-            hint_text: "Add Task..."
+            id: trail
+            hint_text: "Add Trail..."
             pos_hint: {"center_y": .4}
             max_text_length: 50
-            on_text_validate: (app.add_task(task_text, date_text.text), app.close_dialog())
-
-        MDIconButton:
-            icon: 'calendar'
-            on_release: root.show_date_picker()
-            padding: '10dp'
+            on_text_validate: app.add_trail(trail)
 
     MDLabel:
         spacing: '10dp'
@@ -50,11 +44,10 @@ MDFloatLayout:
 
         MDRaisedButton:
             text: "SAVE"
-            on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
+            on_release: app.add_trail(trail)
         MDFlatButton:
             text: 'CANCEL'
             on_release: app.close_dialog()
-
 
 <ListItemWithCheckbox>:
     id: the_list_item
@@ -62,12 +55,10 @@ MDFloatLayout:
 
     LeftCheckbox:
         id: check
-        on_release: 
-            root.mark(check, the_list_item)
+        on_release: root.mark(check, the_list_item)
 
     IconRightWidget:
         icon: 'trash-can-outline'
         theme_text_color: "Custom"
         text_color: 1, 0, 0, 1
-        on_release:
-            root.delete_item(the_list_item)
+        on_release: root.delete_item(the_list_item)
