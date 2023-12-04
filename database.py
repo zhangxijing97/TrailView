@@ -7,22 +7,39 @@ class Database:
         self.create_trail_table()
 
     '''CREATE the Trails TABLE'''
+    # def create_trail_table(self):
+    #     self.cursor.execute("CREATE TABLE IF NOT EXISTS trails(id integer PRIMARY KEY AUTOINCREMENT, trail varchar(50) NOT NULL, due_date varchar(50), saved BOOLEAN NOT NULL CHECK (saved IN (0, 1)))")
+
     def create_trail_table(self):
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS trails(id integer PRIMARY KEY AUTOINCREMENT, trail varchar(50) NOT NULL, due_date varchar(50), saved BOOLEAN NOT NULL CHECK (saved IN (0, 1)))")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS trails(id integer PRIMARY KEY AUTOINCREMENT, trail varchar(50) NOT NULL, saved BOOLEAN NOT NULL CHECK (saved IN (0, 1)))")
+
     
     '''CREATE A Trail'''
-    def create_trail(self, trail, due_date=None):
-        self.cursor.execute("INSERT INTO trails(trail, due_date, saved) VALUES(?, ?, ?)", (trail, due_date, 0))
+    # def create_trail(self, trail, due_date=None):
+    #     self.cursor.execute("INSERT INTO trails(trail, due_date, saved) VALUES(?, ?, ?)", (trail, due_date, 0))
+    #     self.con.commit()
+
+    #     created_trail = self.cursor.execute("SELECT id, trail, due_date FROM trails WHERE trail = ? and saved = 0", (trail,)).fetchall()
+    #     return created_trail[-1]
+    
+    def create_trail(self, trail):
+        self.cursor.execute("INSERT INTO trails(trail, saved) VALUES(?, ?)", (trail, 0))
         self.con.commit()
 
-        created_trail = self.cursor.execute("SELECT id, trail, due_date FROM trails WHERE trail = ? and saved = 0", (trail,)).fetchall()
+        created_trail = self.cursor.execute("SELECT id, trail FROM trails WHERE trail = ? and saved = 0", (trail,)).fetchall()
         return created_trail[-1]
     
     '''READ / GET the trails''' 
+    # def get_trails(self):
+    #     # Getting all saved and unsaved trails
+    #     saved_trails = self.cursor.execute("SELECT id, trail, due_date FROM trails WHERE saved = 1").fetchall()
+    #     unsaved_trails = self.cursor.execute("SELECT id, trail, due_date FROM trails WHERE saved = 0").fetchall()
+    #     return saved_trails, unsaved_trails
+
     def get_trails(self):
         # Getting all saved and unsaved trails
-        saved_trails = self.cursor.execute("SELECT id, trail, due_date FROM trails WHERE saved = 1").fetchall()
-        unsaved_trails = self.cursor.execute("SELECT id, trail, due_date FROM trails WHERE saved = 0").fetchall()
+        saved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 1").fetchall()
+        unsaved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 0").fetchall()
         return saved_trails, unsaved_trails
 
     '''UPDATING the trails status'''
@@ -46,3 +63,39 @@ class Database:
     '''Closing the connection '''
     def close_db_connection(self):
         self.con.close()
+
+
+  # def create_trail(self, trail, location=None, latitude=None, longitude=None, length=None, difficulty=None, duration=None, is_kid_friendly=None, is_pet_friendly=None, due_date=None):
+    #     self.cursor.execute("""
+    #         INSERT INTO trails(
+    #             trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, due_date, saved
+    #         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    #     """, (trail, location, latitude, longitude, length, difficulty, duration, is_kid_friendly, is_pet_friendly, due_date, 0))
+    #     self.con.commit()
+
+    #     created_trail = self.cursor.execute("""
+    #         SELECT id, trail, due_date FROM trails WHERE trail = ? AND saved = 0
+    #     """, (trail,)).fetchall()
+
+    #     return created_trail[-1]
+
+
+    # def create_trail_table(self):
+    #     self.cursor.execute("""
+    #         CREATE TABLE IF NOT EXISTS trails(
+    #             id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #             trail VARCHAR(50) NOT NULL,
+                            
+    #             location TEXT,
+    #             latitude REAL,
+    #             longitude REAL,
+    #             length REAL,
+    #             difficulty TEXT,
+    #             duration REAL,
+    #             isKidFriendly BOOLEAN,
+    #             isPetFriendly BOOLEAN,
+                            
+    #             due_date VARCHAR(50),
+    #             saved BOOLEAN NOT NULL CHECK (saved IN (0, 1))
+    #         )
+    #     """)

@@ -14,7 +14,6 @@ from database import Database
 # Initialize db instance
 db = Database()
 
-
 class DialogContent(MDBoxLayout):
     """OPENS A DIALOG BOX THAT GETS THE TASK FROM THE USER"""
     def __init__(self, **kwargs):
@@ -34,7 +33,7 @@ class DialogContent(MDBoxLayout):
 # After creating the database.py
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
     '''Custom list item'''
-
+    
     def __init__(self, pk=None, **kwargs):
         super().__init__(**kwargs)
         # state a pk which we shall use link the list items with the database primary keys
@@ -81,12 +80,12 @@ class MainApp(MDApp):
 
             if saved_trails != []:
                 for trail in saved_trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0],text=trail[1], secondary_text=trail[2])
+                    add_trail = ListItemWithCheckbox(pk=trail[0],text=trail[1])
                     self.root.ids.container.add_widget(add_trail)
 
             if unsaved_trails != []:
                 for trail in unsaved_trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0],text='[s]'+trail[1]+'[/s]', secondary_text=trail[2])
+                    add_trail = ListItemWithCheckbox(pk=trail[0],text='[s]'+trail[1]+'[/s]')
                     add_trail.ids.check.active = True
                     self.root.ids.container.add_widget(add_trail)
 
@@ -97,12 +96,12 @@ class MainApp(MDApp):
     def close_dialog(self, *args):
         self.trail_list_dialog.dismiss()
 
-    def add_trail(self, trail, trail_date):
+    def add_trail(self, trail):
         '''Add task to the list of tasks'''
-        created_trail = db.create_trail(trail.text, trail_date)
+        created_trail = db.create_trail(trail.text)
 
         # return the created task details and create a list item
-        self.root.ids['container'].add_widget(ListItemWithCheckbox(pk=created_trail[0], text='[b]'+created_trail[1]+'[/b]', secondary_text=created_trail[2]))
+        self.root.ids['container'].add_widget(ListItemWithCheckbox(pk=created_trail[0], text='[b]'+created_trail[1]+'[/b]'))
         trail.text = ''
 
 if __name__ == '__main__':
