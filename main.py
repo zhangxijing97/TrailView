@@ -4,11 +4,11 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.pickers import MDDatePicker
 
-from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
+from kivymd.uix.list import ThreeLineAvatarIconListItem, IRightBodyTouch
 from kivymd.uix.selectioncontrol import MDCheckbox
-# from kivymd.uix.card import MDCard
+from kivymd.uix.chip import MDChip
 
-from datetime import datetime
+from kivymd.toast import toast
 
 # To be added after creating the database
 from database import Database
@@ -20,20 +20,8 @@ class DialogContent(MDBoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    # self.ids.date_text.text = str(datetime.now().strftime('%A %d %B %Y'))
-    
-    # def show_date_picker(self):
-    #     """Opens the date picker"""
-    #     date_dialog = MDDatePicker()
-    #     date_dialog.bind(on_save=self.on_save)
-    #     date_dialog.open()
-
-    # def on_save(self, instance, value, date_range):
-    #     date = value.strftime('%A %d %B %Y')
-    #     self.ids.date_text.text = str(date)
-
 # After creating the database.py
-class ListItemWithCheckbox(TwoLineAvatarIconListItem):
+class ListItem(ThreeLineAvatarIconListItem):
     '''Custom list item'''
     
     def __init__(self, pk=None, **kwargs):
@@ -49,12 +37,25 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
         else:
             the_list_item.text = str(db.mark_trail_as_unsaved(the_list_item.pk))# Here
 
-    def delete_item(self, the_list_item):
-        '''Delete the task'''
-        self.parent.remove_widget(the_list_item)
-        db.delete_trail(the_list_item.pk)# Here
+    def toggle_saved(self):
+        # Toggle the saved attribute of the trail based on the checkbox value
+        if db.get_saved_status(self.pk):
+            db.mark_trail_as_unsaved(self.pk)
+            self.icon = 'bookmark'
+        else:
+            db.mark_trail_as_saved(self.pk)
+            self.icon = 'bookmark'
 
-class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
+    def get_saved_status(self):
+        saved_status = db.get_saved_status(self.pk)
+        return 0
+
+    # def delete_item(self, the_list_item):
+    #     '''Delete the task'''
+    #     self.parent.remove_widget(the_list_item)
+    #     db.delete_trail(the_list_item.pk)# Here
+
+class RightCheckbox(IRightBodyTouch, MDCheckbox):
     '''Custom left container'''
 
 # Main App class
@@ -62,6 +63,7 @@ class MainApp(MDApp):
     trail_list_dialog = None
     def build(self):
         # Setting theme to my favorite theme
+        self.title = "TrailView"
         self.theme_cls.primary_palette = "Green"
         
     # Showing the trail dialog to add tasks 
@@ -78,23 +80,10 @@ class MainApp(MDApp):
     def on_start(self):
         # Load the saved trails and add them to the MDList widget when the application starts
         try:
-            # saved_trails, unsaved_trails = db.get_trails()
-
-            # if saved_trails != []:
-            #     for trail in saved_trails:
-            #         add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
-            #         self.root.ids.container.add_widget(add_trail)
-
-            # if unsaved_trails != []:
-            #     for trail in unsaved_trails:
-            #         add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
-            #         add_trail.ids.check.active = True
-            #         self.root.ids.container.add_widget(add_trail)
-
             trails = db.get_trails()
             if trails != []:
                 for trail in trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0], text = trail[1], secondary_text = trail[2])
+                    add_trail = ListItem(pk=trail[0], text = trail[1], secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
                     self.root.ids.container.add_widget(add_trail)
 
         except Exception as e:
@@ -110,8 +99,11 @@ class MainApp(MDApp):
         created_trail = db.create_trail(trail.text, location.text)
 
         # return the created task details and create a list item
-        self.root.ids['container'].add_widget(ListItemWithCheckbox(pk=created_trail[0], text='[b]'+created_trail[1]+'[/b]'))
+        self.root.ids['container'].add_widget(ListItem(pk=created_trail[0], text='[b]'+created_trail[1]+'[/b]'))
         trail.text = ''
+
+    def callback(self, instance, value):
+        toast(value)
 
 if __name__ == '__main__':
     app = MainApp()

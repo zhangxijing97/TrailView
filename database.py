@@ -82,6 +82,10 @@ class Database:
         # returning the trail text
         trail_text = self.cursor.execute("SELECT trail FROM trails WHERE id=?", (trailid,)).fetchall()
         return trail_text[0][0]
+    
+    def get_saved_status(self, trailid):
+        saved_status = self.cursor.execute("SELECT saved FROM trails WHERE id=?", (trailid,)).fetchone()
+        return bool(saved_status[0]) if saved_status else None
 
     '''Deleting the trail'''
     def delete_trail(self, trailid):

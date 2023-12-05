@@ -1,10 +1,41 @@
-MDFloatLayout:
-    MDLabel:
-        id: task_label
-        halign: 'center'
-        markup: True
-        text: "[u][size=48][b]TrailView[/b][/size][/u]"
-        pos_hint: {'y': .45}
+MDBoxLayout:
+    orientation: 'vertical'
+    spacing: dp(10)
+
+    MDGridLayout:
+        padding: dp(60)
+        spacing: dp(10)
+        cols: 1
+        adaptive_height: True
+
+        MDLabel:
+            id: task_label
+            markup: True
+            text: "[size=48][b]TrailView[/b][/size]"
+
+        MDSeparator:
+
+        MDStackLayout:
+            adaptive_height: True
+            spacing: dp(5)
+
+            MDChip:
+                text: "Coffee"
+                color: .4470588235294118, .19607843137254902, 0, 1
+                icon: "coffee"
+                callback: app.callback
+
+            MDChip:
+                text: "Duck"
+                color: .9215686274509803, 0, 0, 1
+                icon: "duck"
+                callback: app.callback
+
+            MDChip:
+                text: "Earth"
+                color: .21176470588235294, .09803921568627451, 1, 1
+                icon: "earth"
+                callback: app.callback
 
     ScrollView:
         pos_hint: {'center_y': .5, 'center_x': .5}
@@ -13,11 +44,34 @@ MDFloatLayout:
         MDList:
             id: container
 
-    MDFloatingActionButton:
-        icon: 'plus-thick'
-        on_release: app.show_trail_dialog()
-        elevation_normal: 12
-        pos_hint: {'x': .45 , 'y': .04}
+
+# MDFloatLayout:
+
+#     BoxLayout:
+#         orientation: 'vertical'
+#         spacing: '5dp'
+
+#         MDChip:
+#             label: 'Earth'
+#             icon: 'earth'
+#             selected_chip_color: .21176470535294, .098039627451, 1, 1
+
+#         MDChip:
+#             label: 'Face'
+#             icon: 'face'
+#             selected_chip_color: .21176470535294, .098039627451, 1, 1
+
+#         MDChip:
+#             label: 'Facebook'
+#             icon: 'facebook'
+#             selected_chip_color: .21176470535294, .098039627451, 1, 1
+
+#         ScrollView:
+#             pos_hint: {'center_y': .5, 'center_x': .5}
+#             size_hint: .9, .8
+
+#             MDList:
+#                 id: container
 
 <DialogContent>:
     orientation: "vertical"
@@ -110,21 +164,16 @@ MDFloatLayout:
             text: 'CANCEL'
             on_release: app.close_dialog()
 
-<ListItemWithCheckbox>:
+<ListItem>:
     id: the_list_item
     markup: True
 
-    # LeftCheckbox:
-    #     id: check
-    #     on_release: 
-    #         root.mark(check, the_list_item)
-
     ImageLeftWidget:
-        source: "data/logo/kivy-icon-256.png"
+        source: "image/default-image-icon.png"
 
     IconRightWidget:
-        icon: 'trash-can-outline'
+        icon: 'bookmark-outline'
         theme_text_color: "Custom"
-        text_color: 1, 0, 0, 1
-        on_release:
-            root.delete_item(the_list_item)
+        text_color: (0.5, 0.5, 0.5, 1)
+        on_press:
+            root.toggle_saved()
