@@ -6,6 +6,7 @@ from kivymd.uix.pickers import MDDatePicker
 
 from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
 from kivymd.uix.selectioncontrol import MDCheckbox
+# from kivymd.uix.card import MDCard
 
 from datetime import datetime
 
@@ -77,17 +78,23 @@ class MainApp(MDApp):
     def on_start(self):
         # Load the saved trails and add them to the MDList widget when the application starts
         try:
-            saved_trails, unsaved_trails = db.get_trails()
+            # saved_trails, unsaved_trails = db.get_trails()
 
-            if saved_trails != []:
-                for trail in saved_trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
-                    self.root.ids.container.add_widget(add_trail)
+            # if saved_trails != []:
+            #     for trail in saved_trails:
+            #         add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
+            #         self.root.ids.container.add_widget(add_trail)
 
-            if unsaved_trails != []:
-                for trail in unsaved_trails:
-                    add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
-                    add_trail.ids.check.active = True
+            # if unsaved_trails != []:
+            #     for trail in unsaved_trails:
+            #         add_trail = ListItemWithCheckbox(pk=trail[0], text=trail[1], secondary_text = "Secondary text here")
+            #         add_trail.ids.check.active = True
+            #         self.root.ids.container.add_widget(add_trail)
+
+            trails = db.get_trails()
+            if trails != []:
+                for trail in trails:
+                    add_trail = ListItemWithCheckbox(pk=trail[0], text = trail[1], secondary_text = trail[2])
                     self.root.ids.container.add_widget(add_trail)
 
         except Exception as e:

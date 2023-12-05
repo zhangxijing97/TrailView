@@ -28,7 +28,6 @@ class Database:
                 saved BOOLEAN NOT NULL CHECK (saved IN (0, 1))
             )
         """)
-
     
     '''CREATE A Trail'''
     # def create_trail(self, trail):
@@ -50,12 +49,27 @@ class Database:
         return created_trail[-1]
     
     '''READ / GET the trails''' 
-    def get_trails(self):
-        # Getting all saved and unsaved trails
-        saved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 1").fetchall()
-        unsaved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 0").fetchall()
-        return saved_trails, unsaved_trails
+    # def get_trails(self):
+    #     # Getting all saved and unsaved trails
+    #     saved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 1").fetchall()
+    #     unsaved_trails = self.cursor.execute("SELECT id, trail FROM trails WHERE saved = 0").fetchall()
+    #     return saved_trails, unsaved_trails
 
+    def get_trails(self):
+        # Getting all trails, regardless of saved status
+        all_trails = self.cursor.execute("SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails").fetchall()
+        return all_trails
+    
+    def get_saved_and_unsaved_trails(self):
+        # Calling the get_all_trails method to get all trails
+        all_trails = self.get_trails()
+
+        # Separating saved and unsaved trails
+        saved_trails = [trail for trail in all_trails if trail[0] == 1]
+        unsaved_trails = [trail for trail in all_trails if trail[0] == 0]
+
+        return saved_trails, unsaved_trails
+    
     '''UPDATING the trails status'''
     def mark_trail_as_saved(self, trailid):
         self.cursor.execute("UPDATE trails SET saved=1 WHERE id=?", (trailid,))
