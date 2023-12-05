@@ -70,6 +70,15 @@ class Database:
 
         return saved_trails, unsaved_trails
     
+    def get_saved_trails(self):
+        # Calling the get_all_trails method to get all trails
+        all_trails = self.get_trails()
+
+        # Separating saved and unsaved trails
+        saved_trails = [trail for trail in all_trails if trail[0] == 1]
+
+        return saved_trails
+    
     '''UPDATING the trails status'''
     def mark_trail_as_saved(self, trailid):
         self.cursor.execute("UPDATE trails SET saved=1 WHERE id=?", (trailid,))

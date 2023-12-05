@@ -20,22 +20,20 @@ MDBoxLayout:
             spacing: dp(5)
 
             MDChip:
-                text: "Coffee"
-                color: .4470588235294118, .19607843137254902, 0, 1
-                icon: "coffee"
+                text: "Kid Friendly"
+                color: 0, 0, 0, 1
                 callback: app.callback
 
             MDChip:
-                text: "Duck"
-                color: .9215686274509803, 0, 0, 1
-                icon: "duck"
+                text: "Pet Friendly"
+                color: 0, 0, 0, 1
                 callback: app.callback
 
             MDChip:
-                text: "Earth"
-                color: .21176470588235294, .09803921568627451, 1, 1
-                icon: "earth"
-                callback: app.callback
+                text: "Saved"
+                color:  0, 0, 0, 1
+                on_release: app.toggle_saved_trails()
+                # on_release: app.load_saved_trails()
 
     ScrollView:
         pos_hint: {'center_y': .5, 'center_x': .5}
@@ -44,6 +42,11 @@ MDBoxLayout:
         MDList:
             id: container
 
+    MDFloatingActionButton:
+        icon: 'plus-thick'
+        on_release: app.show_trail_dialog()
+        elevation_normal: 12
+        pos_hint: {'x': .45 , 'y': .04}
 
 # MDFloatLayout:
 

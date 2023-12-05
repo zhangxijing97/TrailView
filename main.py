@@ -65,6 +65,7 @@ class MainApp(MDApp):
         # Setting theme to my favorite theme
         self.title = "TrailView"
         self.theme_cls.primary_palette = "Green"
+        self.saved_trails_loaded = False
         
     # Showing the trail dialog to add tasks 
     def show_trail_dialog(self):
@@ -77,14 +78,43 @@ class MainApp(MDApp):
 
         self.trail_list_dialog.open()
 
+    def toggle_saved_trails(self):
+        if self.saved_trails_loaded:
+            self.on_start()
+        else:
+            self.load_saved_trails()
+
     def on_start(self):
-        # Load the saved trails and add them to the MDList widget when the application starts
+        # Load the all trails and add them to the MDList widget when the application starts
         try:
+            # Clear all existing trails from the container
+            self.root.ids.container.clear_widgets()
+
             trails = db.get_trails()
             if trails != []:
                 for trail in trails:
                     add_trail = ListItem(pk=trail[0], text = trail[1], secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
                     self.root.ids.container.add_widget(add_trail)
+
+            self.saved_trails_loaded = False
+
+        except Exception as e:
+            print(e)
+            pass
+
+    def load_saved_trails(self):
+        # Load the saved trails only
+        try:
+            # Clear all existing trails from the container
+            self.root.ids.container.clear_widgets()
+
+            trails = db.get_saved_trails()
+            if trails != []:
+                for trail in trails:
+                    add_trail = ListItem(pk=trail[0], text = trail[1], secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
+                    self.root.ids.container.add_widget(add_trail)
+
+            self.saved_trails_loaded = True
 
         except Exception as e:
             print(e)
