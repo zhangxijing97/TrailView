@@ -19,51 +19,77 @@ MDBoxLayout:
             adaptive_height: True
             spacing: dp(5)
 
-            MDChip:
-                text: "Length"
-                color: 0, 0, 0, 1
-                callback: app.callback
+            MDRoundFlatIconButton:
+                id: length_button_1
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Trails (3 mi)[b]"
+                on_press: app.toggle_filter("length_button_1")
+                on_release: app.toggle_button_pressed(self)
 
-            MDChip:
-                text: "Length"
-                color: 0, 0, 0, 1
-                callback: app.callback
+            MDRoundFlatIconButton:
+                id: length_button_2
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Trails (8 mi)[b]"
+                on_press: app.toggle_filter("length_button_2")
+                on_release: app.toggle_button_pressed(self)
 
-            MDChip:
-                text: "Length"
-                color: 0, 0, 0, 1
-                callback: app.callback
+            MDRoundFlatIconButton:
+                id: length_button_3
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Trails (8+ mi)[b]"
+                on_press: app.toggle_filter("length_button_3")
+                on_release: app.toggle_button_pressed(self)
 
-            MDChip:
-                text: "Difficulty"
-                color: 0, 0, 0, 1
-                callback: app.callback
+            MDRoundFlatIconButton:
+                id: easy_button
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Easy[b]"
+                on_press: app.toggle_filter("easy")
+                on_release: app.toggle_button_pressed(self)
 
-            # MDChip:
-            #     text: "Duration"
-            #     color: 0, 0, 0, 1
-            #     callback: app.callback
+            MDRoundFlatIconButton:
+                id: moderate_button
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Moderate[b]"
+                on_press: app.toggle_filter("moderate")
+                on_release: app.toggle_button_pressed(self)
 
-            MDRoundFlatButton:
-                text: "Duration"
-                # increment_width: "164dp"
-                on_release: app.show_trail_dialog()
+            MDRoundFlatIconButton:
+                id: hard_button
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Hard[b]"
+                on_press: app.toggle_filter("hard")
+                on_release: app.toggle_button_pressed(self)
 
-            # MDRoundFlatIconButton:
-            #     id: kid_friendly_button
-            #     icon: "circle-outline"
-            #     markup: True
-            #     text: "[b]Kid Friendly[b]"
-            #     on_press: app.toggle_filter("kid_friendly")
-            #     on_release: app.toggle_button_pressed(self)
+            MDRoundFlatIconButton:
+                id: duration_button_1
+                icon: "circle-outline"
+                markup: True
+                text: "[b]1 hour Trails[b]"
+                on_press: app.toggle_filter("duration_button_1")
+                on_release: app.toggle_button_pressed(self)
 
-            # MDRoundFlatIconButton:
-            #     id: pet_friendly_button
-            #     icon: "circle-outline"
-            #     markup: True
-            #     text: "[b]Pet Friendly[b]"
-            #     on_press: app.toggle_filter("pet_friendly")
-            #     on_release: app.toggle_button_pressed(self)
+            MDRoundFlatIconButton:
+                id: duration_button_2
+                icon: "circle-outline"
+                markup: True
+                text: "[b]3 hour Trails[b]"
+                on_press: app.toggle_filter("duration_button_2")
+                on_release: app.toggle_button_pressed(self)
+
+            MDRoundFlatIconButton:
+                id: duration_button_3
+                icon: "circle-outline"
+                markup: True
+                text: "[b]6 hour Trails[b]"
+                on_press: app.toggle_filter("duration_button_3")
+                on_release: app.toggle_button_pressed(self)
 
             MDRoundFlatIconButton:
                 id: kid_friendly_button
@@ -81,13 +107,17 @@ MDBoxLayout:
                 on_press: app.toggle_filter("pet_friendly")
                 on_release: app.toggle_button_pressed(self)
 
-            # MDRoundFlatButton:
-            #     text: "Pet Friendly"
-            #     on_release: app.toggle_filter("pet_friendly")
+            MDRoundFlatIconButton:
+                id: saved_button
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Saved[b]"
+                on_press: app.toggle_filter("saved")
+                on_release: app.toggle_button_pressed(self)
 
-            MDRoundFlatButton:
-                text: "Saved"
-                on_release: app.toggle_filter("saved")
+            # MDRoundFlatButton:
+            #     text: "Saved"
+            #     on_release: app.toggle_filter("saved")
 
     ScrollView:
         pos_hint: {'center_y': .5, 'center_x': .5}
@@ -235,17 +265,17 @@ MDBoxLayout:
         on_press:
             root.toggle_saved()
 
-<DurationDialogContent>:
-    title: "Set Duration"
-    auto_dismiss: False
+# <DurationDialogContent>:
+#     title: "Set Duration"
+#     auto_dismiss: False
 
-    MDSlider:
-        id: duration_slider
-        min: 0
-        max: 10  # Set your desired maximum duration
-        value: app.duration_filter_value  # Assuming you have a variable to store the duration filter value
-        on_value: app.update_duration_filter(value)
+#     MDSlider:
+#         id: duration_slider
+#         min: 0
+#         max: 10  # Set your desired maximum duration
+#         value: app.duration_filter_value  # Assuming you have a variable to store the duration filter value
+#         on_value: app.update_duration_filter(value)
 
-    MDRaisedButton:
-        text: "Apply"
-        on_release: app.apply_duration_filter(duration_slider.value)
+#     MDRaisedButton:
+#         text: "Apply"
+#         on_release: app.apply_duration_filter(duration_slider.value)

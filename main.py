@@ -10,6 +10,12 @@ from kivymd.uix.chip import MDChip
 
 from kivymd.toast import toast
 
+from kivy.lang import Builder
+from kivy.uix.slider import Slider
+from kivymd.app import MDApp
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDRaisedButton
+
 # To be added after creating the database
 from database import Database
 # Initialize db instance
@@ -150,8 +156,32 @@ class MainApp(MDApp):
         query = "SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails WHERE "
         conditions = []
 
-        if "saved" in self.active_filters:
-            conditions.append("saved = 1")
+        if "length_button_1" in self.active_filters:
+            conditions.append("length <= 3")
+
+        if "length_button_2" in self.active_filters:
+            conditions.append("length > 3 AND length <= 8")
+
+        if "length_button_3" in self.active_filters:
+            conditions.append("length > 8")
+
+        if "easy" in self.active_filters:
+            conditions.append("difficulty = 'Easy'")
+
+        if "moderate" in self.active_filters:
+            conditions.append("difficulty = 'Moderate'")
+
+        if "hard" in self.active_filters:
+            conditions.append("difficulty = 'Hard'")
+
+        if "duration_button_1" in self.active_filters:
+            conditions.append("duration <= 60")
+
+        if "duration_button_2" in self.active_filters:
+            conditions.append("duration <= 180")
+
+        if "duration_button_3" in self.active_filters:
+            conditions.append("duration <= 360")
 
         if "kid_friendly" in self.active_filters:
             conditions.append("isKidFriendly = 1")
@@ -159,10 +189,13 @@ class MainApp(MDApp):
         if "pet_friendly" in self.active_filters:
             conditions.append("isPetFriendly = 1")
 
+        if "saved" in self.active_filters:
+            conditions.append("saved = 1")
+
         if conditions:
             query += " AND ".join(conditions)
 
-        if "pet_friendly" not in self.active_filters and "kid_friendly" not in self.active_filters and "saved" not in self.active_filters:
+        if "length_button_1" not in self.active_filters and "length_button_2" not in self.active_filters and "length_button_3" not in self.active_filters and "easy" not in self.active_filters and "moderate" not in self.active_filters and "hard" not in self.active_filters and "duration_button_1" not in self.active_filters and "duration_button_2" not in self.active_filters and "duration_button_3" not in self.active_filters and "kid_friendly" not in self.active_filters and "pet_friendly" not in self.active_filters and "saved" not in self.active_filters:
             query = "SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails"
 
         try:
