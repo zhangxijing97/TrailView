@@ -319,13 +319,13 @@ MDBoxLayout:
     id: the_list_item
     markup: True
 
-    ImageLeftWidget:
-        source: "image/default-image-icon.png"
+    # ImageLeftWidget:
+    #     source: "image/default-image-icon.png"
 
-    # IconLeftWidget:
-    #     id: icon_left_widget
-    #     icon: 'image'
-    #     md_bg_color: 0.7922, 0.8705, 0.7294, 1
+    IconLeftWidget:
+        id: icon_left_widget
+        icon: 'image'
+        on_release: app.switch_to_detail_view("test","test2")
 
     IconRightWidget:
         id: icon_right_widget

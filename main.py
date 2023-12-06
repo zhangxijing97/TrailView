@@ -211,9 +211,11 @@ class MainApp(MDApp):
             # trails = self.cursor.execute(query).fetchall()
             if trails:
                 for trail in trails:
+                    trail_name = f"[size=36][b]{trail[1]}[/b][/size]"
                     add_trail = ListItem(
                         pk=trail[0],
-                        text=trail[1],
+                        # text=trail[1],
+                        text=trail_name,
                         secondary_text=trail[2],
                         tertiary_text="Length: " + str(trail[5]) + "mi",
                     )
