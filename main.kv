@@ -14,7 +14,6 @@ MDBoxLayout:
             text: "[size=48][b]TrailView[/b][/size]"
 
         MDSeparator:
-        
 
         MDStackLayout:
             adaptive_height: True
@@ -40,40 +39,55 @@ MDBoxLayout:
                 color: 0, 0, 0, 1
                 callback: app.callback
 
-            MDChip:
-                text: "Duration"
-                color: 0, 0, 0, 1
-                callback: app.callback
-
-            MDChip:
-                text: "Kid Friendly"
-                color: 0, 0, 0, 1
-                on_release: app.toggle_filter("kid_friendly")
-
-            MDChip:
-                text: "Pet Friendly"
-                color: 0, 0, 0, 1
-                on_release: app.toggle_filter("pet_friendly")
-
-            MDChip:
-                text: "Saved"
-                color: 0, 0, 0, 1
-                on_release: app.toggle_filter("saved")
-
             # MDChip:
-            #     text: "Kid Friendly"
+            #     text: "Duration"
             #     color: 0, 0, 0, 1
             #     callback: app.callback
 
-            # MDChip:
-            #     text: "Pet Friendly"
-            #     color: 0, 0, 0, 1
-            #     on_release: app.toggle_petFriendly_trails()
+            MDRoundFlatButton:
+                text: "Duration"
+                # increment_width: "164dp"
+                on_release: app.show_trail_dialog()
 
-            # MDChip:
-            #     text: "Saved"
-            #     color:  0, 0, 0, 1
-            #     on_release: app.toggle_saved_trails()
+            # MDRoundFlatIconButton:
+            #     id: kid_friendly_button
+            #     icon: "circle-outline"
+            #     markup: True
+            #     text: "[b]Kid Friendly[b]"
+            #     on_press: app.toggle_filter("kid_friendly")
+            #     on_release: app.toggle_button_pressed(self)
+
+            # MDRoundFlatIconButton:
+            #     id: pet_friendly_button
+            #     icon: "circle-outline"
+            #     markup: True
+            #     text: "[b]Pet Friendly[b]"
+            #     on_press: app.toggle_filter("pet_friendly")
+            #     on_release: app.toggle_button_pressed(self)
+
+            MDRoundFlatIconButton:
+                id: kid_friendly_button
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Kid Friendly[b]"
+                on_press: app.toggle_filter("kid_friendly")
+                on_release: app.toggle_button_pressed(self)
+
+            MDRoundFlatIconButton:
+                id: pet_friendly_button
+                icon: "circle-outline"
+                markup: True
+                text: "[b]Pet Friendly[b]"
+                on_press: app.toggle_filter("pet_friendly")
+                on_release: app.toggle_button_pressed(self)
+
+            # MDRoundFlatButton:
+            #     text: "Pet Friendly"
+            #     on_release: app.toggle_filter("pet_friendly")
+
+            MDRoundFlatButton:
+                text: "Saved"
+                on_release: app.toggle_filter("saved")
 
     ScrollView:
         pos_hint: {'center_y': .5, 'center_x': .5}
@@ -220,3 +234,18 @@ MDBoxLayout:
         text_color: (0.5, 0.5, 0.5, 1)
         on_press:
             root.toggle_saved()
+
+<DurationDialogContent>:
+    title: "Set Duration"
+    auto_dismiss: False
+
+    MDSlider:
+        id: duration_slider
+        min: 0
+        max: 10  # Set your desired maximum duration
+        value: app.duration_filter_value  # Assuming you have a variable to store the duration filter value
+        on_value: app.update_duration_filter(value)
+
+    MDRaisedButton:
+        text: "Apply"
+        on_release: app.apply_duration_filter(duration_slider.value)

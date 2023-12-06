@@ -37,39 +37,19 @@ class ListItem(ThreeLineAvatarIconListItem):
         else:
             the_list_item.text = str(db.mark_trail_as_unsaved(the_list_item.pk))# Here
 
-    def toggle_saved(self):
-        # Toggle the saved attribute of the trail based on the checkbox value
-        if db.get_saved_status(self.pk):
-            db.mark_trail_as_unsaved(self.pk)
-            self.icon = 'bookmark'
-        else:
-            db.mark_trail_as_saved(self.pk)
-            self.icon = 'bookmark'
-
-    def get_saved_status(self):
-        saved_status = db.get_saved_status(self.pk)
-        return 0
-
-    # def delete_item(self, the_list_item):
-    #     '''Delete the task'''
-    #     self.parent.remove_widget(the_list_item)
-    #     db.delete_trail(the_list_item.pk)# Here
-
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
     '''Custom left container'''
 
 # Main App class
 class MainApp(MDApp):
     trail_list_dialog = None
+
     def build(self):
         # Setting theme to my favorite theme
         self.title = "TrailView"
         self.theme_cls.primary_palette = "Green"
 
         self.active_filters = set()
-
-        self.saved_trails_loaded = False
-        self.petFriendly_loaded = False
         
     # Showing the trail dialog to add tasks 
     def show_trail_dialog(self):
@@ -82,18 +62,6 @@ class MainApp(MDApp):
 
         self.trail_list_dialog.open()
 
-    def toggle_saved_trails(self):
-        if self.saved_trails_loaded:
-            self.on_start()
-        else:
-            self.load_saved_trails()
-
-    def toggle_petFriendly_trails(self):
-        if self.petFriendly_loaded:
-            self.on_start()
-        else:
-            self.load_petFriendly_trails()
-
     def on_start(self):
         # Load the all trails and add them to the MDList widget when the application starts
         try:
@@ -103,6 +71,7 @@ class MainApp(MDApp):
             trails = db.get_trails()
             if trails != []:
                 for trail in trails:
+
                     for element in trail:
                         print(element)
                     
@@ -215,6 +184,12 @@ class MainApp(MDApp):
         except Exception as e:
             print(e)
             pass
+
+    def toggle_button_pressed(self, button):
+        if button.icon == "circle":
+            button.icon = "circle-outline"
+        else:
+            button.icon = "circle"
 
 if __name__ == '__main__':
     app = MainApp()
