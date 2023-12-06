@@ -1,18 +1,20 @@
 MDBoxLayout:
     orientation: 'vertical'
-    # padding: dp(50)
+    padding: dp(0)
+    spacing: dp(0)
+    md_bg_color: 0.1059, 0.1098, 0.0980, 1
 
     MDGridLayout:
         spacing: dp(10)
         cols: 1
         adaptive_height: True
 
-        canvas:
-            Color:
-                rgba: 0.1059, 0.1098, 0.0980, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # canvas:
+        #     Color:
+        #         rgba: 0.1059, 0.1098, 0.0980, 1
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
         MDFillRoundFlatIconButton:
             id: task_label
@@ -318,6 +320,9 @@ MDBoxLayout:
 <ListItem>:
     id: the_list_item
     markup: True
+    bg_color: 1, 1, 1, 1
+    # text_color: 1, 1, 1, 1
+    # secondary_text_color: 1, 1, 1, 1
 
     # ImageLeftWidget:
     #     source: "image/default-image-icon.png"
