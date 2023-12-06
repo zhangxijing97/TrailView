@@ -14,26 +14,66 @@ MDBoxLayout:
             text: "[size=48][b]TrailView[/b][/size]"
 
         MDSeparator:
+        
 
         MDStackLayout:
             adaptive_height: True
             spacing: dp(5)
 
             MDChip:
-                text: "Kid Friendly"
+                text: "Length"
                 color: 0, 0, 0, 1
                 callback: app.callback
+
+            MDChip:
+                text: "Length"
+                color: 0, 0, 0, 1
+                callback: app.callback
+
+            MDChip:
+                text: "Length"
+                color: 0, 0, 0, 1
+                callback: app.callback
+
+            MDChip:
+                text: "Difficulty"
+                color: 0, 0, 0, 1
+                callback: app.callback
+
+            MDChip:
+                text: "Duration"
+                color: 0, 0, 0, 1
+                callback: app.callback
+
+            MDChip:
+                text: "Kid Friendly"
+                color: 0, 0, 0, 1
+                on_release: app.toggle_filter("kid_friendly")
 
             MDChip:
                 text: "Pet Friendly"
                 color: 0, 0, 0, 1
-                callback: app.callback
+                on_release: app.toggle_filter("pet_friendly")
 
             MDChip:
                 text: "Saved"
-                color:  0, 0, 0, 1
-                on_release: app.toggle_saved_trails()
-                # on_release: app.load_saved_trails()
+                color: 0, 0, 0, 1
+                on_release: app.toggle_filter("saved")
+
+            # MDChip:
+            #     text: "Kid Friendly"
+            #     color: 0, 0, 0, 1
+            #     callback: app.callback
+
+            # MDChip:
+            #     text: "Pet Friendly"
+            #     color: 0, 0, 0, 1
+            #     on_release: app.toggle_petFriendly_trails()
+
+            # MDChip:
+            #     text: "Saved"
+            #     color:  0, 0, 0, 1
+            #     on_release: app.toggle_saved_trails()
 
     ScrollView:
         pos_hint: {'center_y': .5, 'center_x': .5}
@@ -42,11 +82,11 @@ MDBoxLayout:
         MDList:
             id: container
 
-    MDFloatingActionButton:
-        icon: 'plus-thick'
-        on_release: app.show_trail_dialog()
-        elevation_normal: 12
-        pos_hint: {'x': .45 , 'y': .04}
+    # MDFloatingActionButton:
+    #     icon: 'plus-thick'
+    #     on_release: app.show_trail_dialog()
+    #     elevation_normal: 12
+    #     pos_hint: {'x': .45 , 'y': .04}
 
 # MDFloatLayout:
 

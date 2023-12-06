@@ -65,7 +65,11 @@ class MainApp(MDApp):
         # Setting theme to my favorite theme
         self.title = "TrailView"
         self.theme_cls.primary_palette = "Green"
+
+        self.active_filters = set()
+
         self.saved_trails_loaded = False
+        self.petFriendly_loaded = False
         
     # Showing the trail dialog to add tasks 
     def show_trail_dialog(self):
@@ -84,6 +88,12 @@ class MainApp(MDApp):
         else:
             self.load_saved_trails()
 
+    def toggle_petFriendly_trails(self):
+        if self.petFriendly_loaded:
+            self.on_start()
+        else:
+            self.load_petFriendly_trails()
+
     def on_start(self):
         # Load the all trails and add them to the MDList widget when the application starts
         try:
@@ -93,10 +103,14 @@ class MainApp(MDApp):
             trails = db.get_trails()
             if trails != []:
                 for trail in trails:
+                    for element in trail:
+                        print(element)
+                    
                     add_trail = ListItem(pk=trail[0], text = trail[1], secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
                     self.root.ids.container.add_widget(add_trail)
 
             self.saved_trails_loaded = False
+            self.petFriendly_loaded = False
 
         except Exception as e:
             print(e)
@@ -120,6 +134,24 @@ class MainApp(MDApp):
             print(e)
             pass
 
+    def load_petFriendly_trails(self):
+        # Load the saved trails only
+        try:
+            # Clear all existing trails from the container
+            self.root.ids.container.clear_widgets()
+
+            trails = db.get_petFriendly_trails()
+            if trails != []:
+                for trail in trails:
+                    add_trail = ListItem(pk=trail[0], text = trail[1], secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
+                    self.root.ids.container.add_widget(add_trail)
+
+            self.petFriendly_loaded = True
+
+        except Exception as e:
+            print(e)
+            pass
+
     def close_dialog(self, *args):
         self.trail_list_dialog.dismiss()
 
@@ -134,6 +166,55 @@ class MainApp(MDApp):
 
     def callback(self, instance, value):
         toast(value)
+
+    def toggle_filter(self, filter_name):
+        if filter_name in self.active_filters:
+            self.active_filters.remove(filter_name)
+        else:
+            self.active_filters.add(filter_name)
+
+        # Update the displayed trails based on active filters
+        self.update_displayed_trails()
+
+    def update_displayed_trails(self):
+        # Construct the SQL query based on active filters
+        query = "SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails WHERE "
+        conditions = []
+
+        if "saved" in self.active_filters:
+            conditions.append("saved = 1")
+
+        if "kid_friendly" in self.active_filters:
+            conditions.append("isKidFriendly = 1")
+
+        if "pet_friendly" in self.active_filters:
+            conditions.append("isPetFriendly = 1")
+
+        if conditions:
+            query += " AND ".join(conditions)
+
+        if "pet_friendly" not in self.active_filters and "kid_friendly" not in self.active_filters and "saved" not in self.active_filters:
+            query = "SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails"
+
+        try:
+            # Clear all existing trails from the container
+            self.root.ids.container.clear_widgets()
+
+            trails = db.get_filter_trails(query)
+            # trails = self.cursor.execute(query).fetchall()
+            if trails:
+                for trail in trails:
+                    add_trail = ListItem(
+                        pk=trail[0],
+                        text=trail[1],
+                        secondary_text=trail[2],
+                        tertiary_text="Length: " + str(trail[5]) + "mi",
+                    )
+                    self.root.ids.container.add_widget(add_trail)
+
+        except Exception as e:
+            print(e)
+            pass
 
 if __name__ == '__main__':
     app = MainApp()

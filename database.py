@@ -71,13 +71,17 @@ class Database:
         return saved_trails, unsaved_trails
     
     def get_saved_trails(self):
-        # Calling the get_all_trails method to get all trails
-        all_trails = self.get_trails()
-
-        # Separating saved and unsaved trails
-        saved_trails = [trail for trail in all_trails if trail[0] == 1]
-
+        saved_trails = self.cursor.execute("SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails WHERE saved = 1").fetchall()
         return saved_trails
+    
+    def get_petFriendly_trails(self):
+        petFriendly_trails = self.cursor.execute("SELECT id, trail, location, latitude, longitude, length, difficulty, duration, isKidFriendly, isPetFriendly, saved FROM trails WHERE isPetFriendly = 1").fetchall()
+        return petFriendly_trails
+    
+    def get_filter_trails(self, query):
+        print(query)
+        petFriendly_trails = self.cursor.execute(query).fetchall()
+        return petFriendly_trails
     
     '''UPDATING the trails status'''
     def mark_trail_as_saved(self, trailid):
