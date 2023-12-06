@@ -1,29 +1,56 @@
 MDBoxLayout:
     orientation: 'vertical'
-    spacing: dp(10)
+    # padding: dp(50)
 
     MDGridLayout:
-        padding: dp(60)
         spacing: dp(10)
         cols: 1
         adaptive_height: True
 
-        MDLabel:
+        canvas:
+            Color:
+                rgba: 0.1059, 0.1098, 0.0980, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        MDFillRoundFlatIconButton:
             id: task_label
             markup: True
+            text: " "
+            md_bg_color: 0.1059, 0.1098, 0.0980, 1
+            icon_color: 0.1059, 0.1098, 0.0980, 1
+            text_color: 0.1059, 0.1098, 0.0980, 1
+
+        MDFillRoundFlatIconButton:
+            id: task_label
+            icon: "image-filter-hdr"
+            markup: True
             text: "[size=48][b]TrailView[/b][/size]"
+            md_bg_color: 0.1059, 0.1098, 0.0980, 1
+            icon_color: 0.7922, 0.8705, 0.7294, 1
+            text_color: 0.7922, 0.8705, 0.7294, 1
 
         MDSeparator:
 
         MDStackLayout:
             adaptive_height: True
-            spacing: dp(5)
+            spacing: dp(10)
+
+            MDFillRoundFlatButton:
+                text: "Length"
+                md_bg_color: 0.2314, 0.2980, 0.2039, 1
+                text_color: 0.7922, 0.8705, 0.7294, 1
 
             MDRoundFlatIconButton:
                 id: length_button_1
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Trails (3 mi)[b]"
+                text: "Trails (3 mi)"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("length_button_1")
                 on_release: app.toggle_button_pressed(self)
 
@@ -31,7 +58,11 @@ MDBoxLayout:
                 id: length_button_2
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Trails (8 mi)[b]"
+                text: "Trails (8 mi)"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("length_button_2")
                 on_release: app.toggle_button_pressed(self)
 
@@ -39,15 +70,32 @@ MDBoxLayout:
                 id: length_button_3
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Trails (8+ mi)[b]"
+                text: "Trails (8+ mi)"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("length_button_3")
                 on_release: app.toggle_button_pressed(self)
+
+        MDStackLayout:
+            adaptive_height: True
+            spacing: dp(10)
+
+            MDFillRoundFlatButton:
+                text: "Difficulty"
+                md_bg_color: 0.2314, 0.2980, 0.2039, 1
+                text_color: 0.7922, 0.8705, 0.7294, 1
 
             MDRoundFlatIconButton:
                 id: easy_button
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Easy[b]"
+                text: "Easy"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("easy")
                 on_release: app.toggle_button_pressed(self)
 
@@ -55,7 +103,11 @@ MDBoxLayout:
                 id: moderate_button
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Moderate[b]"
+                text: "Moderate"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("moderate")
                 on_release: app.toggle_button_pressed(self)
 
@@ -63,15 +115,32 @@ MDBoxLayout:
                 id: hard_button
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Hard[b]"
+                text: "Hard"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("hard")
                 on_release: app.toggle_button_pressed(self)
+
+        MDStackLayout:
+            adaptive_height: True
+            spacing: dp(10)
+
+            MDFillRoundFlatButton:
+                text: "Duration"
+                md_bg_color: 0.2314, 0.2980, 0.2039, 1
+                text_color: 0.7922, 0.8705, 0.7294, 1
 
             MDRoundFlatIconButton:
                 id: duration_button_1
                 icon: "circle-outline"
                 markup: True
-                text: "[b]1 hour Trails[b]"
+                text: "1 hour Trails"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("duration_button_1")
                 on_release: app.toggle_button_pressed(self)
 
@@ -79,7 +148,11 @@ MDBoxLayout:
                 id: duration_button_2
                 icon: "circle-outline"
                 markup: True
-                text: "[b]3 hour Trails[b]"
+                text: "3 hour Trails"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("duration_button_2")
                 on_release: app.toggle_button_pressed(self)
 
@@ -87,15 +160,32 @@ MDBoxLayout:
                 id: duration_button_3
                 icon: "circle-outline"
                 markup: True
-                text: "[b]6 hour Trails[b]"
+                text: "6 hour Trails"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("duration_button_3")
                 on_release: app.toggle_button_pressed(self)
+
+        MDStackLayout:
+            adaptive_height: True
+            spacing: dp(10)
+
+            MDFillRoundFlatButton:
+                text: "Others"
+                md_bg_color: 0.2314, 0.2980, 0.2039, 1
+                text_color: 0.7922, 0.8705, 0.7294, 1
 
             MDRoundFlatIconButton:
                 id: kid_friendly_button
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Kid Friendly[b]"
+                text: "Kid Friendly"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("kid_friendly")
                 on_release: app.toggle_button_pressed(self)
 
@@ -103,7 +193,11 @@ MDBoxLayout:
                 id: pet_friendly_button
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Pet Friendly[b]"
+                text: "Pet Friendly"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("pet_friendly")
                 on_release: app.toggle_button_pressed(self)
 
@@ -111,17 +205,15 @@ MDBoxLayout:
                 id: saved_button
                 icon: "circle-outline"
                 markup: True
-                text: "[b]Saved[b]"
+                text: "Saved"
+                text_color: 0.7922, 0.8705, 0.7294, 1
+                icon_color: 0.7922, 0.8705, 0.7294, 1
+                line_color: 0.7922, 0.8705, 0.7294, 1
+                line_width: 1.2
                 on_press: app.toggle_filter("saved")
                 on_release: app.toggle_button_pressed(self)
 
-            # MDRoundFlatButton:
-            #     text: "Saved"
-            #     on_release: app.toggle_filter("saved")
-
     ScrollView:
-        pos_hint: {'center_y': .5, 'center_x': .5}
-        size_hint: .9, .8
 
         MDList:
             id: container
@@ -131,34 +223,6 @@ MDBoxLayout:
     #     on_release: app.show_trail_dialog()
     #     elevation_normal: 12
     #     pos_hint: {'x': .45 , 'y': .04}
-
-# MDFloatLayout:
-
-#     BoxLayout:
-#         orientation: 'vertical'
-#         spacing: '5dp'
-
-#         MDChip:
-#             label: 'Earth'
-#             icon: 'earth'
-#             selected_chip_color: .21176470535294, .098039627451, 1, 1
-
-#         MDChip:
-#             label: 'Face'
-#             icon: 'face'
-#             selected_chip_color: .21176470535294, .098039627451, 1, 1
-
-#         MDChip:
-#             label: 'Facebook'
-#             icon: 'facebook'
-#             selected_chip_color: .21176470535294, .098039627451, 1, 1
-
-#         ScrollView:
-#             pos_hint: {'center_y': .5, 'center_x': .5}
-#             size_hint: .9, .8
-
-#             MDList:
-#                 id: container
 
 <DialogContent>:
     orientation: "vertical"
@@ -258,24 +322,14 @@ MDBoxLayout:
     ImageLeftWidget:
         source: "image/default-image-icon.png"
 
+    # IconLeftWidget:
+    #     id: icon_left_widget
+    #     icon: 'image'
+    #     md_bg_color: 0.7922, 0.8705, 0.7294, 1
+
     IconRightWidget:
+        id: icon_right_widget
         icon: 'bookmark-outline'
-        theme_text_color: "Custom"
-        text_color: (0.5, 0.5, 0.5, 1)
-        on_press:
-            root.toggle_saved()
-
-# <DurationDialogContent>:
-#     title: "Set Duration"
-#     auto_dismiss: False
-
-#     MDSlider:
-#         id: duration_slider
-#         min: 0
-#         max: 10  # Set your desired maximum duration
-#         value: app.duration_filter_value  # Assuming you have a variable to store the duration filter value
-#         on_value: app.update_duration_filter(value)
-
-#     MDRaisedButton:
-#         text: "Apply"
-#         on_release: app.apply_duration_filter(duration_slider.value)
+        md_bg_color: 0.7922, 0.8705, 0.7294, 1
+        on_press: root.toggle_saved()
+        on_release: app.toggle_saved_button(self)

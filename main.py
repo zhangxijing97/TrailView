@@ -2,19 +2,11 @@
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.pickers import MDDatePicker
 
 from kivymd.uix.list import ThreeLineAvatarIconListItem, IRightBodyTouch
 from kivymd.uix.selectioncontrol import MDCheckbox
-from kivymd.uix.chip import MDChip
 
 from kivymd.toast import toast
-
-from kivy.lang import Builder
-from kivy.uix.slider import Slider
-from kivymd.app import MDApp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDRaisedButton
 
 # To be added after creating the database
 from database import Database
@@ -35,6 +27,17 @@ class ListItem(ThreeLineAvatarIconListItem):
         # state a pk which we shall use link the list items with the database primary keys
         self.pk = pk
 
+        # init the IconRightWidget
+        saved_status = db.get_saved_status(self.pk)
+        if saved_status:
+            self.ids.icon_right_widget.icon = "bookmark"
+        else:
+            self.ids.icon_right_widget.icon = "bookmark-outline"
+
+    def get_save_status(self):
+        saved_status = db.get_saved_status(self.pk)
+        return  saved_status
+
     def mark(self, check, the_list_item):
         '''mark the trail as saved or unsaved'''
         if check.active == True:
@@ -42,6 +45,12 @@ class ListItem(ThreeLineAvatarIconListItem):
             db.mark_trail_as_saved(the_list_item.pk)# here
         else:
             the_list_item.text = str(db.mark_trail_as_unsaved(the_list_item.pk))# Here
+
+    def toggle_saved(self):
+        if db.get_saved_status(self.pk):
+            db.mark_trail_as_unsaved(self.pk)
+        else:
+            db.mark_trail_as_saved(self.pk)
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
     '''Custom left container'''
@@ -54,7 +63,6 @@ class MainApp(MDApp):
         # Setting theme to my favorite theme
         self.title = "TrailView"
         self.theme_cls.primary_palette = "Green"
-
         self.active_filters = set()
         
     # Showing the trail dialog to add tasks 
@@ -78,14 +86,11 @@ class MainApp(MDApp):
             if trails != []:
                 for trail in trails:
 
-                    for element in trail:
-                        print(element)
-                    
-                    add_trail = ListItem(pk=trail[0], text = trail[1], secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
+                    # for element in trail:
+                    #     print(element)
+                    trail_name = f"[size=36][b]{trail[1]}[/b][/size]"
+                    add_trail = ListItem(pk=trail[0], text = trail_name, secondary_text = trail[2], tertiary_text = "Length: " + str(trail[5]) + "mi")
                     self.root.ids.container.add_widget(add_trail)
-
-            self.saved_trails_loaded = False
-            self.petFriendly_loaded = False
 
         except Exception as e:
             print(e)
@@ -223,6 +228,13 @@ class MainApp(MDApp):
             button.icon = "circle-outline"
         else:
             button.icon = "circle"
+
+    # IconRightWidget
+    def toggle_saved_button(self, button):
+        if button.icon == "bookmark-outline":
+            button.icon = "bookmark"
+        else:
+            button.icon = "bookmark-outline"
 
 if __name__ == '__main__':
     app = MainApp()
